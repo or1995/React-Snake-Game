@@ -4,8 +4,8 @@ import Item from './Item';
 import classes from './Layout.module.css';
 
 const Game = () => {
-    const [currRowIndex, setCurrRowIndex] = useState(0);
-    const [currColumnIndex, setCurrColumnIndex] = useState(1);
+    const currRowIndex = useRef(0);
+    const currColumnIndex = useRef(1);
     const [speed, setSpeed] = useState(1000);
     const [food, setFood] = useState(null);
     const [score, setScore] = useState(0);
@@ -27,7 +27,8 @@ const Game = () => {
     
 
     useEffect(() => {
-        document.addEventListener("keydown", (event) => {
+        const keys = (event) => {
+            console.log(direction);
             if(event.key === "ArrowUp") {
                 if(direction !== "down") { 
                     setDirection("up");
@@ -45,16 +46,24 @@ const Game = () => {
                     setDirection("right");
                 }
             }
-        })
+        }
+
+        document.removeEventListener("keydown", keys);
+        document.addEventListener("keydown", keys);
     },[direction])
 
     useEffect(() => {
         const foodGenerator = () => {
             let row = Math.floor(Math.random() * place.length);
             let column = Math.floor(Math.random() * place.length);
-            let inSnake = refSnake.current.find(part => {
-                return part === [row, column];
-            })
+            let inSnake = false;
+
+            for(let part of refSnake.current) {
+                if(part[0] === row && part[1] === column) {
+                    inSnake = true;
+                    break;
+                }
+            }
 
             if(inSnake) {
                 foodGenerator();
@@ -68,13 +77,26 @@ const Game = () => {
     
     useEffect(() => {
             let timer;
+            let inSnake = false;
+
+            for(let part of refSnake.current.slice(0,refSnake.current.length - 2)) {
+                if(part[0] === currRowIndex.current && part[1] === currColumnIndex.current) {
+                    inSnake = true;
+                    break;
+                }
+            }
+
+            if(inSnake) {
+                setGameOver(true);
+            }
+
             if(direction === "right") {
                 timer = setTimeout(()=> {
-                    if(currColumnIndex === place.length - 1) {
+                    if(currColumnIndex.current === place.length - 1) {
                         let newRefSnake = refSnake.current;
-                        newRefSnake.push([currRowIndex, 0]);
+                        newRefSnake.push([currRowIndex.current, 0]);
                         if(food) {
-                            if(currRowIndex === food[0] && currColumnIndex === food[1]) {
+                            if(currRowIndex.current === food[0] && currColumnIndex.current === food[1]) {
                                 setScore(prevScore => prevScore + 5);
                                 if(speed > 100) {
                                     setSpeed(prevSpeed => prevSpeed - 100);
@@ -87,15 +109,13 @@ const Game = () => {
                         }
                         refSnake.current = newRefSnake;
             
-                        setCurrColumnIndex(prevColumnIndex => {
-                            return 0;
-                        });
+                        currColumnIndex.current = 0;
     
                     } else {
                         let newRefSnake = refSnake.current;
-                        newRefSnake.push([currRowIndex, currColumnIndex + 1]);
+                        newRefSnake.push([currRowIndex.current, currColumnIndex.current + 1]);
                         if(food) {
-                            if(currRowIndex === food[0] && currColumnIndex === food[1]) {
+                            if(currRowIndex.current === food[0] && currColumnIndex.current === food[1]) {
                                 setScore(prevScore => prevScore + 5);
                                 if(speed > 100) {
                                     setSpeed(prevSpeed => prevSpeed - 100);
@@ -109,31 +129,19 @@ const Game = () => {
                         
                         refSnake.current = newRefSnake;
                     
-                        setCurrColumnIndex(prevColumnIndex => {
-                            return prevColumnIndex + 1
-                        });
+                        currColumnIndex.current = currColumnIndex.current + 1;
                     }
-
-                    let inSnake = refSnake.current.find(part => {
-                        
-                        return part === [currRowIndex, currColumnIndex];
-                    })
-        
-                    if(inSnake) {
-                        setGameOver(true);
-                    }
-
-                    console.log(inSnake);
     
                     setTime(time + 1);
                 }, speed)
+
             } else if(direction === "left") {
                 timer = setTimeout(()=> {
-                    if(currColumnIndex === 0) {
+                    if(currColumnIndex.current === 0) {
                         let newRefSnake = refSnake.current;
-                        newRefSnake.push([currRowIndex, place.length - 1]);
+                        newRefSnake.push([currRowIndex.current, place.length - 1]);
                         if(food) {
-                            if(currRowIndex === food[0] && currColumnIndex === food[1]) {
+                            if(currRowIndex.current === food[0] && currColumnIndex.current === food[1]) {
                                 setScore(prevScore => prevScore + 5);
                                 if(speed > 100) {
                                     setSpeed(prevSpeed => prevSpeed - 100);
@@ -147,15 +155,13 @@ const Game = () => {
                         
                         refSnake.current = newRefSnake;
             
-                        setCurrColumnIndex(prevColumnIndex => {
-                            return place.length - 1;
-                        });
-    
+                        currColumnIndex.current = place.length - 1;
+
                     } else {
                         let newRefSnake = refSnake.current;
-                        newRefSnake.push([currRowIndex, currColumnIndex - 1]);
+                        newRefSnake.push([currRowIndex.current, currColumnIndex.current - 1]);
                         if(food) {
-                            if(currRowIndex === food[0] && currColumnIndex === food[1]) {
+                            if(currRowIndex.current === food[0] && currColumnIndex.current === food[1]) {
                                 setScore(prevScore => prevScore + 5);
                                 if(speed > 100) {
                                     setSpeed(prevSpeed => prevSpeed - 100);
@@ -168,28 +174,19 @@ const Game = () => {
                         }
                         refSnake.current = newRefSnake;
                     
-                        setCurrColumnIndex(prevColumnIndex => {
-                            return prevColumnIndex - 1
-                        });
-                    }
-
-                    let inSnake = refSnake.current.find(part => {   
-                        return part === [currRowIndex, currColumnIndex];
-                    })
-        
-                    if(inSnake) {
-                        setGameOver(true);
+                        currColumnIndex.current = currColumnIndex.current - 1;
                     }
     
                     setTime(time + 1);
                 }, speed)
+
             } else if(direction === "up") {
                 timer = setTimeout(()=> {
-                    if(currRowIndex === 0) {
+                    if(currRowIndex.current === 0) {
                         let newRefSnake = refSnake.current;
-                        newRefSnake.push([place.length - 1, currColumnIndex]);
+                        newRefSnake.push([place.length - 1, currColumnIndex.current]);
                         if(food) {
-                            if(currRowIndex === food[0] && currColumnIndex === food[1]) {
+                            if(currRowIndex.current === food[0] && currColumnIndex.current === food[1]) {
                                 setScore(prevScore => prevScore + 5);
                                 if(speed > 100) {
                                     setSpeed(prevSpeed => prevSpeed - 100);
@@ -202,15 +199,13 @@ const Game = () => {
                         }
                         refSnake.current = newRefSnake;
             
-                        setCurrRowIndex(prevColumnIndex => {
-                            return place.length - 1;
-                        });
+                        currRowIndex.current = place.length - 1;
     
                     } else {
                         let newRefSnake = refSnake.current;
-                        newRefSnake.push([currRowIndex - 1, currColumnIndex]);
+                        newRefSnake.push([currRowIndex.current - 1, currColumnIndex.current]);
                         if(food) {
-                            if(currRowIndex === food[0] && currColumnIndex === food[1]) {
+                            if(currRowIndex.current === food[0] && currColumnIndex.current === food[1]) {
                                 setScore(prevScore => prevScore + 5);
                                 if(speed > 100) {
                                     setSpeed(prevSpeed => prevSpeed - 100);
@@ -223,28 +218,19 @@ const Game = () => {
                         }
                         refSnake.current = newRefSnake;
                     
-                        setCurrRowIndex(prevRowIndex => {
-                            return prevRowIndex - 1
-                        });
-                    }
-
-                    let inSnake = refSnake.current.find(part => {   
-                        return part === [currRowIndex, currColumnIndex];
-                    })
-        
-                    if(inSnake) {
-                        setGameOver(true);
+                        currRowIndex.current = currRowIndex.current - 1;
                     }
     
                     setTime(time + 1);
                 }, speed)
+
             } else if(direction === "down") {
                 timer = setTimeout(()=> {
-                    if(currRowIndex === place.length - 1) {
+                    if(currRowIndex.current === place.length - 1) {
                         let newRefSnake = refSnake.current;
-                        newRefSnake.push([0, currColumnIndex]);
+                        newRefSnake.push([0, currColumnIndex.current]);
                         if(food) {
-                            if(currRowIndex === food[0] && currColumnIndex === food[1]) {
+                            if(currRowIndex.current === food[0] && currColumnIndex.current === food[1]) {
                                 setScore(prevScore => prevScore + 5);
                                 if(speed > 100) {
                                     setSpeed(prevSpeed => prevSpeed - 100);
@@ -257,15 +243,13 @@ const Game = () => {
                         }
                         refSnake.current = newRefSnake;
             
-                        setCurrRowIndex(prevRowIndex => {
-                            return 0;
-                        });
+                        currRowIndex.current = 0;
     
                     } else {
                         let newRefSnake = refSnake.current;
-                        newRefSnake.push([currRowIndex + 1, currColumnIndex]);
+                        newRefSnake.push([currRowIndex.current + 1, currColumnIndex.current]);
                         if(food) {
-                            if(currRowIndex === food[0] && currColumnIndex === food[1]) {
+                            if(currRowIndex.current === food[0] && currColumnIndex.current === food[1]) {
                                 setScore(prevScore => prevScore + 5);
                                 if(speed > 100) {
                                     setSpeed(prevSpeed => prevSpeed - 100);
@@ -278,20 +262,8 @@ const Game = () => {
                         }
                         refSnake.current = newRefSnake;
                     
-                        setCurrRowIndex(prevRowIndex => {
-                            return prevRowIndex + 1
-                        });
+                        currRowIndex.current = currRowIndex.current + 1;
                     }
-
-                    let inSnake = refSnake.current.find(part => {
-                        return part === [currRowIndex, currColumnIndex];
-                    })
-        
-                    if(inSnake) {
-                        setGameOver(true);
-                    }
-
-                    console.log(inSnake);
     
                     setTime(time + 1);
                 }, speed)                
@@ -301,7 +273,7 @@ const Game = () => {
                 clearTimeout(timer);
             }
 
-    },[time, direction])
+    },[time, direction, refSnake])
 
     return (
         <div className={classes.layout}>
