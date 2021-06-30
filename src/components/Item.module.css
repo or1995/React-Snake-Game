@@ -2,7 +2,8 @@
     width: 4rem;
     height: 4rem;
     margin-left: 2px;
-    background-color: #75a781;
+    background-color: rgb(181, 202, 238);
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 6px, rgba(0, 0, 0, 0.4) 0px 3px 6px;
     border-radius: 4px;
 }
 
@@ -10,6 +11,8 @@
     width: 4rem;
     height: 4rem;
     margin-left: 2px;
-    background-color: #1d2a20;
+    background-color: rgb(56, 83, 129);
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 6px, rgba(0, 0, 0, 0.4) 0px 3px 6px;
+    z-index: 1000000;
     border-radius: 4px;
 }

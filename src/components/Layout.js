@@ -14,13 +14,18 @@ const Game = () => {
     const [gameOver, setGameOver] = useState(false);
     const [place, setPlace] = useState(
         [
-            [0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0]
+            [0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0],
         ]
     );
     const refSnake = useRef([[0,0],[0,1]])
@@ -99,7 +104,7 @@ const Game = () => {
                             if(currRowIndex.current === food[0] && currColumnIndex.current === food[1]) {
                                 setScore(prevScore => prevScore + 5);
                                 if(speed > 100) {
-                                    setSpeed(prevSpeed => prevSpeed - 100);
+                                    setSpeed(prevSpeed => prevSpeed - 30);
                                 }
                             } else {
                                 newRefSnake.shift();
@@ -118,7 +123,7 @@ const Game = () => {
                             if(currRowIndex.current === food[0] && currColumnIndex.current === food[1]) {
                                 setScore(prevScore => prevScore + 5);
                                 if(speed > 100) {
-                                    setSpeed(prevSpeed => prevSpeed - 100);
+                                    setSpeed(prevSpeed => prevSpeed - 30);
                                 }
                             } else {
                                 newRefSnake.shift();
@@ -144,7 +149,7 @@ const Game = () => {
                             if(currRowIndex.current === food[0] && currColumnIndex.current === food[1]) {
                                 setScore(prevScore => prevScore + 5);
                                 if(speed > 100) {
-                                    setSpeed(prevSpeed => prevSpeed - 100);
+                                    setSpeed(prevSpeed => prevSpeed - 30);
                                 }
                             } else {
                                 newRefSnake.shift();
@@ -164,7 +169,7 @@ const Game = () => {
                             if(currRowIndex.current === food[0] && currColumnIndex.current === food[1]) {
                                 setScore(prevScore => prevScore + 5);
                                 if(speed > 100) {
-                                    setSpeed(prevSpeed => prevSpeed - 100);
+                                    setSpeed(prevSpeed => prevSpeed - 30);
                                 }
                             } else {
                                 newRefSnake.shift();
@@ -189,7 +194,7 @@ const Game = () => {
                             if(currRowIndex.current === food[0] && currColumnIndex.current === food[1]) {
                                 setScore(prevScore => prevScore + 5);
                                 if(speed > 100) {
-                                    setSpeed(prevSpeed => prevSpeed - 100);
+                                    setSpeed(prevSpeed => prevSpeed - 30);
                                 }
                             } else {
                                 newRefSnake.shift();
@@ -208,7 +213,7 @@ const Game = () => {
                             if(currRowIndex.current === food[0] && currColumnIndex.current === food[1]) {
                                 setScore(prevScore => prevScore + 5);
                                 if(speed > 100) {
-                                    setSpeed(prevSpeed => prevSpeed - 100);
+                                    setSpeed(prevSpeed => prevSpeed - 30);
                                 }
                             } else {
                                 newRefSnake.shift();
@@ -233,7 +238,7 @@ const Game = () => {
                             if(currRowIndex.current === food[0] && currColumnIndex.current === food[1]) {
                                 setScore(prevScore => prevScore + 5);
                                 if(speed > 100) {
-                                    setSpeed(prevSpeed => prevSpeed - 100);
+                                    setSpeed(prevSpeed => prevSpeed - 30);
                                 }
                             } else {
                                 newRefSnake.shift();
@@ -252,7 +257,7 @@ const Game = () => {
                             if(currRowIndex.current === food[0] && currColumnIndex.current === food[1]) {
                                 setScore(prevScore => prevScore + 5);
                                 if(speed > 100) {
-                                    setSpeed(prevSpeed => prevSpeed - 100);
+                                    setSpeed(prevSpeed => prevSpeed - 30);
                                 }
                             } else {
                                 newRefSnake.shift();
@@ -275,11 +280,46 @@ const Game = () => {
 
     },[time, direction, refSnake])
 
+    const gameReset = () => {
+        currRowIndex.current = 0;
+        currColumnIndex.current = 1;
+        setSpeed(1000);
+        setFood(null);
+        setScore(0);
+        setDirection("right");
+        setTime(0);
+        setGameOver(false);
+        setPlace(
+            [
+                [0,0,0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0,0,0],
+            ]
+        );
+        refSnake.current = [[0,0],[0,1]];
+    }
+
     return (
         <div className={classes.layout}>
-            {gameOver ? <h1>game over</h1> : null}
+            <div className={classes.scoreboard}>
+                <h1 className={classes.score}>SCORE {score}</h1>
+            </div>
             <div className={classes.game}>
-            {place.map((row,index) => {
+            {gameOver ? <div className={classes.gameoverscreen}>
+                <h1>GAME OVER</h1>
+                <h2>FINAL SCORE {score}</h2>
+                <button onClick={gameReset}>RESTART</button>
+            </div>: 
+            place.map((row,index) => {
                     return (<div className={classes.row} key={index}>
                         {row.map((item,iindex) => {
                             for(let part of refSnake.current) {
@@ -294,7 +334,8 @@ const Game = () => {
                             return <Item active={false} key={iindex}/>
                         })}
                     </div>)
-                })} 
+                })}
+            {} 
             </div>         
         </div>
     )

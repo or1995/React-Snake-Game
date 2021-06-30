@@ -1,14 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;500;700&display=swap');
+
 .layout {
     width: 100vw;
     height: 100vh;
-    background-color: #545a64;
+    background: rgb(20,30,48);
+    background: linear-gradient(156deg, rgba(20,30,48,1) 0%, rgba(36,59,85,1) 100%);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
+.scoreboard {
+    position: relative;
+    height: 5rem;
+    width: 100vw;
+    padding: 0 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.score {
+    font-family: 'Rubik', sans-serif;
+    color: #fff;
+    font-weight: 300;
+    font-size: 2rem;
+}
+
 .game {
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -20,4 +41,45 @@
     align-items: center;
     justify-content: center;
     margin-bottom: 2px;
+}
+
+.gameoverscreen {
+    width: 30rem;
+    height: 30rem;
+    border-radius: 5px;
+    background-color: rgb(181, 202, 238);
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 6px, rgba(0, 0, 0, 0.4) 0px 3px 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.gameoverscreen h1 {
+    font-family: 'Rubik', sans-serif;
+    color: rgb(20,30,48);
+    font-size: 3.5rem;
+    font-weight: 500;
+}
+
+.gameoverscreen h2 {
+    font-family: 'Rubik', sans-serif;
+    color: rgb(20,30,48);
+    font-size: 1.8rem;
+    font-weight: 300;
+    margin-bottom: 1rem;
+}
+
+.gameoverscreen button {
+    font-family: 'Rubik', sans-serif;
+    color: #fff;
+    background: rgb(20,30,48);
+    background: linear-gradient(156deg, rgba(20,30,48,1) 0%, rgba(36,59,85,1) 100%);
+    border: none;
+    padding: .5rem 2rem;
+    font-size: 1.5rem;
+    font-weight: 300;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 6px;
+    border-radius: 5px;
 }
