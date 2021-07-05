@@ -1,4 +1,4 @@
-.item {
+:global(.item) {
     width: 4rem;
     height: 4rem;
     margin-left: 2px;
@@ -8,11 +8,68 @@
 }
 
 .activeitem {
-    width: 4rem;
-    height: 4rem;
-    margin-left: 2px;
-    background-color: rgb(56, 83, 129);
+    background-color: rgb(56, 83, 129) !important;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 6px, rgba(0, 0, 0, 0.4) 0px 3px 6px;
     z-index: 1000000;
-    border-radius: 4px;
 }
+
+@media only screen and (max-width: 1600px) {
+    :global(.item) {
+        width: 2.8rem;
+        height: 2.8rem;
+    }
+
+    .activeitem {
+        width: 2.8rem;
+        height: 2.8rem;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    :global(.item) {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .activeitem {
+        width: 2rem;
+        height: 2rem;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    :global(.item) {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+
+    .activeitem {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+}
+
+@media only screen and (max-width: 350px) {
+    :global(.item) {
+        width: 1.4rem;
+        height: 1.4rem;
+    }
+
+    .activeitem {
+        width: 1.4rem;
+        height: 1.4rem;
+    }
+}
+
+@media only screen and (max-width: 300px) {
+    :global(.item) {
+        width: 1.2rem;
+        height: 1.2rem;
+    }
+
+    .activeitem {
+        width: 1.2rem;
+        height: 1.2rem;
+    }
+}
+

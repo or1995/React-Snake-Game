@@ -1,4 +1,5 @@
 import React, {useEffect, useState, useRef} from 'react';
+import { gsap } from "gsap/all";
 
 import Item from './Item';
 import classes from './Layout.module.css';
@@ -6,13 +7,13 @@ import classes from './Layout.module.css';
 const Game = () => {
     const currRowIndex = useRef(0);
     const currColumnIndex = useRef(1);
-    const [speed, setSpeed] = useState(1000);
+    const [speed, setSpeed] = useState(700);
     const [food, setFood] = useState(null);
     const [score, setScore] = useState(0);
     const [direction, setDirection] = useState("right");
     const [time, setTime] = useState(0);
     const [gameOver, setGameOver] = useState(false);
-    const [place, setPlace] = useState(
+    const [place, setPlace] = useState(  // might remove this and add height and width states
         [
             [0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0],
@@ -28,7 +29,8 @@ const Game = () => {
             [0,0,0,0,0,0,0,0,0,0,0,0],
         ]
     );
-    const refSnake = useRef([[0,0],[0,1]])
+    const [games, setGames] = useState(1);
+    const refSnake = useRef([[0,0],[0,1]]);
     
 
     useEffect(() => {
@@ -103,8 +105,8 @@ const Game = () => {
                         if(food) {
                             if(currRowIndex.current === food[0] && currColumnIndex.current === food[1]) {
                                 setScore(prevScore => prevScore + 5);
-                                if(speed > 100) {
-                                    setSpeed(prevSpeed => prevSpeed - 30);
+                                if(speed > 10) {
+                                    setSpeed(prevSpeed => prevSpeed - 10);
                                 }
                             } else {
                                 newRefSnake.shift();
@@ -122,8 +124,8 @@ const Game = () => {
                         if(food) {
                             if(currRowIndex.current === food[0] && currColumnIndex.current === food[1]) {
                                 setScore(prevScore => prevScore + 5);
-                                if(speed > 100) {
-                                    setSpeed(prevSpeed => prevSpeed - 30);
+                                if(speed > 10) {
+                                    setSpeed(prevSpeed => prevSpeed - 10);
                                 }
                             } else {
                                 newRefSnake.shift();
@@ -148,8 +150,8 @@ const Game = () => {
                         if(food) {
                             if(currRowIndex.current === food[0] && currColumnIndex.current === food[1]) {
                                 setScore(prevScore => prevScore + 5);
-                                if(speed > 100) {
-                                    setSpeed(prevSpeed => prevSpeed - 30);
+                                if(speed > 10) {
+                                    setSpeed(prevSpeed => prevSpeed - 10);
                                 }
                             } else {
                                 newRefSnake.shift();
@@ -168,8 +170,8 @@ const Game = () => {
                         if(food) {
                             if(currRowIndex.current === food[0] && currColumnIndex.current === food[1]) {
                                 setScore(prevScore => prevScore + 5);
-                                if(speed > 100) {
-                                    setSpeed(prevSpeed => prevSpeed - 30);
+                                if(speed > 10) {
+                                    setSpeed(prevSpeed => prevSpeed - 10);
                                 }
                             } else {
                                 newRefSnake.shift();
@@ -193,8 +195,8 @@ const Game = () => {
                         if(food) {
                             if(currRowIndex.current === food[0] && currColumnIndex.current === food[1]) {
                                 setScore(prevScore => prevScore + 5);
-                                if(speed > 100) {
-                                    setSpeed(prevSpeed => prevSpeed - 30);
+                                if(speed > 10) {
+                                    setSpeed(prevSpeed => prevSpeed - 10);
                                 }
                             } else {
                                 newRefSnake.shift();
@@ -212,8 +214,8 @@ const Game = () => {
                         if(food) {
                             if(currRowIndex.current === food[0] && currColumnIndex.current === food[1]) {
                                 setScore(prevScore => prevScore + 5);
-                                if(speed > 100) {
-                                    setSpeed(prevSpeed => prevSpeed - 30);
+                                if(speed > 10) {
+                                    setSpeed(prevSpeed => prevSpeed - 10);
                                 }
                             } else {
                                 newRefSnake.shift();
@@ -237,8 +239,8 @@ const Game = () => {
                         if(food) {
                             if(currRowIndex.current === food[0] && currColumnIndex.current === food[1]) {
                                 setScore(prevScore => prevScore + 5);
-                                if(speed > 100) {
-                                    setSpeed(prevSpeed => prevSpeed - 30);
+                                if(speed > 10) {
+                                    setSpeed(prevSpeed => prevSpeed - 10);
                                 }
                             } else {
                                 newRefSnake.shift();
@@ -256,8 +258,8 @@ const Game = () => {
                         if(food) {
                             if(currRowIndex.current === food[0] && currColumnIndex.current === food[1]) {
                                 setScore(prevScore => prevScore + 5);
-                                if(speed > 100) {
-                                    setSpeed(prevSpeed => prevSpeed - 30);
+                                if(speed > 10) {
+                                    setSpeed(prevSpeed => prevSpeed - 10);
                                 }
                             } else {
                                 newRefSnake.shift();
@@ -280,10 +282,25 @@ const Game = () => {
 
     },[time, direction, refSnake])
 
+    useEffect(() => {
+        gsap.fromTo('.item',{backgroundColor: '#b5caee'}, {
+            repeat: -1,
+            yoyo: true,
+            backgroundColor: '#dce5f5',
+            duration: 4,
+            ease: "Power2.easeOut",
+            stagger: {
+              from: "edges",
+              amount: 4,
+              grid: [12,12]
+            }
+          });
+    },[games]);
+
     const gameReset = () => {
         currRowIndex.current = 0;
         currColumnIndex.current = 1;
-        setSpeed(1000);
+        setSpeed(700);
         setFood(null);
         setScore(0);
         setDirection("right");
@@ -305,7 +322,32 @@ const Game = () => {
                 [0,0,0,0,0,0,0,0,0,0,0,0],
             ]
         );
+        setGames(games + 1);
         refSnake.current = [[0,0],[0,1]];
+    }
+
+    const top = () => {
+        if(direction !== "down") { 
+            setDirection("up");
+        }
+    }
+
+    const left = () => {
+        if(direction !== "right") { 
+            setDirection("left");
+        }
+    }
+
+    const right = () => {
+        if(direction !== "left") { 
+            setDirection("right");
+        }
+    }
+
+    const down = () => {
+        if(direction !== "up") { 
+            setDirection("down");
+        }
     }
 
     return (
@@ -324,19 +366,31 @@ const Game = () => {
                         {row.map((item,iindex) => {
                             for(let part of refSnake.current) {
                                 if(part[0] === index && part[1] === iindex) {
-                                    return <Item active={true} key={iindex}/>
+                                    return <Item active={true} key={iindex+index}/>
                                 } else if(food) {
                                     if(food[0] === index && food[1] === iindex) {
-                                        return <Item active={true} key={iindex}/>
+                                        return <Item active={true} key={iindex+index}/>
                                     }
                                 }
                             }
-                            return <Item active={false} key={iindex}/>
+                            return <Item active={false} key={iindex+index}/>
                         })}
                     </div>)
                 })}
             {} 
-            </div>         
+            </div> 
+            <div className={classes.controls}>
+                <div className={classes.controlcontainer}>
+                    <button className={classes.top} onClick={top}>&#8679;</button>
+                </div>
+                <div className={classes.controlcontainer}>
+                    <button className={classes.left} onClick={left}>&#8678;</button>
+                    <button className={classes.right} onClick={right}>&#8680;</button>
+                </div>
+                <div className={classes.controlcontainer}>
+                    <button className={classes.down} onClick={down}>&#8681;</button>
+                </div>
+            </div>        
         </div>
     )
 }

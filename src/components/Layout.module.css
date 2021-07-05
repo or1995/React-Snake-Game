@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;500;700&display=swap');
 
 .layout {
-    width: 100vw;
+    width: 100%;
     height: 100vh;
     background: rgb(20,30,48);
     background: linear-gradient(156deg, rgba(20,30,48,1) 0%, rgba(36,59,85,1) 100%);
@@ -14,7 +14,7 @@
 .scoreboard {
     position: relative;
     height: 5rem;
-    width: 100vw;
+    width: 100%;
     padding: 0 5rem;
     display: flex;
     align-items: center;
@@ -82,4 +82,88 @@
     cursor: pointer;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 6px;
     border-radius: 5px;
+}
+
+.controls {
+    display: none;
+}
+
+@media only screen and (max-width: 1300px) {
+    .controls {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 10rem;
+        margin-bottom: 2rem;
+    }
+
+    .controlcontainer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: .3rem;
+        margin-bottom: .3rem;
+    }
+
+    .top {
+        width: 8rem;
+        height: 3rem;
+        font-size: 1.5rem;
+        background-color: #dce5f5;
+        box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 6px, rgba(0, 0, 0, 0.4) 0px 3px 6px;
+        border-top-left-radius: 1rem;
+        border-top-right-radius: 1rem;
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+        cursor: pointer;
+        border: none;
+        color: rgb(20,30,48);
+        
+    }
+
+    .down {
+        width: 8rem;
+        height: 3rem;
+        font-size: 1.5rem;
+        background-color: #dce5f5;
+        box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 6px, rgba(0, 0, 0, 0.4) 0px 3px 6px;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+        border-bottom-left-radius: 1rem;
+        border-bottom-right-radius: 1rem;
+        cursor: pointer;
+        border: none;    
+        color: rgb(20,30,48);    
+    }
+
+    .left {
+        width: 8rem;
+        height: 3rem;
+        font-size: 1.5rem;
+        background-color: #dce5f5;
+        box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 6px, rgba(0, 0, 0, 0.4) 0px 3px 6px;
+        border-top-left-radius: 1rem;
+        border-top-right-radius: 4px;
+        border-bottom-left-radius: 1rem;
+        border-bottom-right-radius: 4px;
+        cursor: pointer;
+        border: none;    
+        color: rgb(20,30,48);   
+    }
+
+    .right {
+        width: 8rem;
+        height: 3rem;
+        font-size: 1.5rem;
+        background-color: #dce5f5;
+        box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 6px, rgba(0, 0, 0, 0.4) 0px 3px 6px;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 1rem;
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 1rem;
+        cursor: pointer;
+        border: none;    
+        color: rgb(20,30,48);   
+    }
 }
