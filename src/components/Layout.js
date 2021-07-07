@@ -37,21 +37,37 @@ const Game = () => {
         const keys = (event) => {
             console.log(direction);
             if(event.key === "ArrowUp") {
-                if(direction !== "down") { 
-                    setDirection("up");
-                }
+                setDirection(prevDirection => {
+                    if(prevDirection !== "down") {
+                        return "up";
+                    } else {
+                        return "down"
+                    }
+                });
             } else if(event.key === "ArrowDown") {
-                if(direction !== "up") {
-                    setDirection("down");
-                }
+                setDirection(prevDirection => {
+                    if(prevDirection !== "up") {
+                        return "down";
+                    } else {
+                        return "up"
+                    }
+                });
             } else if(event.key === "ArrowLeft") {
-                if(direction !== "right") {
-                    setDirection("left");
-                }
+                setDirection(prevDirection => {
+                    if(prevDirection !== "right") {
+                        return "left";
+                    } else {
+                        return "right"
+                    }
+                });
             } else if(event.key === "ArrowRight") {
-                if(direction !== "left") {
-                    setDirection("right");
-                }
+                setDirection(prevDirection => {
+                    if(prevDirection !== "left") {
+                        return "right";
+                    } else {
+                        return "left"
+                    }
+                });
             }
         }
 
