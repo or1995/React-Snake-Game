@@ -7,7 +7,7 @@ import classes from './Layout.module.css';
 const Game = () => {
     const currRowIndex = useRef(0);
     const currColumnIndex = useRef(1);
-    const [speed, setSpeed] = useState(700);
+    const [speed, setSpeed] = useState(400);
     const [food, setFood] = useState(null);
     const [score, setScore] = useState(0);
     const [direction, setDirection] = useState("right");
@@ -316,7 +316,7 @@ const Game = () => {
     const gameReset = () => {
         currRowIndex.current = 0;
         currColumnIndex.current = 1;
-        setSpeed(700);
+        setSpeed(400);
         setFood(null);
         setScore(0);
         setDirection("right");
